@@ -13,9 +13,22 @@ module DLinkedList
 		
 		attr_reader :autores, :titulo, :fecha_publicacion
 		
-		def initialize(autores, titulo, fecha_publicacion)
-			@autores, @titulo, @fecha_publicacion = autores, titulo, fecha_publicacion
-			raise ArgumentError, "Debe haber al menos un autor" unless autores.length > 0
+		def initialize(&block)
+			instance_eval &block
+			raise ArgumentError, "Debe haber al menos un autor" unless @autores.length > 0
+		end
+		
+		def autor(autorhash)
+			@autores = [] if @autores.nil?
+			@autores.push(autorhash)
+		end
+		
+		def tit(titulo)
+			@titulo = titulo
+		end
+		
+		def fecha(fecha_publicacion)
+			@fecha_publicacion = Date.strptime(fecha_publicacion, '%d/%m/%Y')
 		end
 		
 		def to_s
@@ -61,9 +74,21 @@ module DLinkedList
 	
 		attr_reader :edicion, :lugar_publicacion, :editorial
 		
-		def initialize(autores, titulo, fecha_publicacion, edicion, lugar_publicacion, editorial)
-			super(autores, titulo, fecha_publicacion)
-			@edicion, @lugar_publicacion, @editorial = edicion, lugar_publicacion, editorial
+		def initialize(&block)
+			instance_eval &block
+			raise ArgumentError, "Debe haber al menos un autor" unless @autores.length > 0
+		end
+		
+		def ed(edicion)
+			@edicion = edicion
+		end
+		
+		def lugar(lugar_publicacion)
+			@lugar_publicacion = lugar_publicacion
+		end
+		
+		def editor(editorial)
+			@editorial = editorial
 		end		
 
 		def to_s
@@ -77,10 +102,18 @@ module DLinkedList
 	class Articulo < Referencia
 	
 		attr_reader :titulo_publicacion, :paginas
+				
+		def initialize(&block)
+			instance_eval &block
+			raise ArgumentError, "Debe haber al menos un autor" unless @autores.length > 0
+		end
 		
-		def initialize(autores, titulo, fecha_publicacion, titulo_publicacion, paginas)
-			super(autores, titulo, fecha_publicacion)
-			@titulo_publicacion, @paginas = titulo_publicacion, paginas
+		def tit_publi(titulo_publicacion)
+			@titulo_publicacion = titulo_publicacion
+		end
+		
+		def pags(paginas)
+			@paginas = paginas
 		end		
 
 		def to_s
@@ -95,9 +128,17 @@ module DLinkedList
 	
 		attr_reader :fecha_recuperacion, :dURL
 		
-		def initialize(autores, titulo, fecha_publicacion, fecha_recuperacion, dURL)
-			super(autores, titulo, fecha_publicacion)
-			@fecha_recuperacion, @dURL = fecha_recuperacion, dURL
+		def initialize(&block)
+			instance_eval &block
+			raise ArgumentError, "Debe haber al menos un autor" unless @autores.length > 0
+		end
+		
+		def fecha_recup(fecha_recuperacion)
+			@fecha_recuperacion = Date.strptime(fecha_recuperacion, '%d/%m/%Y')
+		end
+		
+		def URL_descarga(dURL)
+			@dURL = dURL
 		end
 		
 		def to_s
