@@ -7,11 +7,44 @@ require "date" # Para manipulación de fechas
 describe DLinkedList do
     
     before :each do        
-
-        @r1 = DLinkedList::Referencia.new([{nombre: 'Dave', apellidos: 'Thomas'}, {nombre: 'Andy', apellidos: 'Hunt'}, {nombre: 'Chad', apellidos: 'Fowler'}], 'Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide', Date.new(2013, 7, 7))
-        @l1 = DLinkedList::Libro.new([{nombre: 'David', apellidos: 'Flanagan'}, {nombre: 'Yukihiro', apellidos: 'Matsumoto'}], 'The Ruby Programming Language', Date.new(2008, 2, 4), 1, 'Dallas, Texas', 'O’Reilly Media')
-		@a1 = DLinkedList::Articulo.new([{nombre: 'Mario', apellidos: 'Vargas Llosa'}], 'El elefante y la cultura', Date.new(1982, 9, 1), 'Revista Vuelta', '13-16')
-		@d1 = DLinkedList::EDocumento.new([{nombre: 'Mario', apellidos: 'Magallón'}], 'Filosofía política de la educación', Date.new(1993, 5, 10), Date.new(2009, 2, 5), 'http://bidi.unam.mx/libroe_2007/0638679/Index.html')
+        
+        @r1 = DLinkedList::Referencia.new do
+        	autor	:nombre => 'Dave',
+        			:apellidos => 'Thomas'
+        	autor	:nombre => 'Andy',
+      				:apellidos => 'Hunt'
+        	autor	:nombre => 'Chad',
+     				:apellidos => 'Fowler'
+        	tit		'Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide'
+        	fecha	'7/7/2013'
+        end        
+        @l1 = DLinkedList::Libro.new do
+        	autor	:nombre => 'David',
+        			:apellidos => 'Flanagan'
+        	autor	:nombre => 'Yukihiro',
+        			:apellidos => 'Matsumoto'
+        	tit		'The Ruby Programming Language'
+        	fecha	'4/2/2008'
+        	ed		1
+        	lugar	'Dallas, Texas'
+        	editor	'O’Reilly Media'
+        end
+        @a1 = DLinkedList::Articulo.new do
+        	autor		:nombre => 'Mario',
+        				:apellidos => 'Vargas Llosa'
+        	tit			'El elefante y la cultura'
+        	fecha		'1/9/1982'
+        	tit_publi	'Revista Vuelta'
+        	pags		'13-16'
+        end
+        @d1 = DLinkedList::EDocumento.new do
+        	autor			:nombre => 'Mario',
+        					:apellidos => 'Magallón'
+        	tit				'Filosofía política de la educación'
+        	fecha			'10/5/1993'
+        	fecha_recup		'5/2/2009'
+        	URL_descarga	'http://bidi.unam.mx/libroe_2007/0638679/Index.html'
+        end		
 		
 		@nodo = DLinkedList::Node.new("Un valor")
 		@list = DLinkedList::List.new()
@@ -48,9 +81,19 @@ describe DLinkedList do
 		
 		describe "# El objeto referencia básica es comparable" do
 			
-			before :each do
-				@r2 = DLinkedList::Referencia.new([{nombre: 'Mario', apellidos: 'Magallón'}], 'Filosofía política de la educación', Date.new(1993, 5, 10))
-				@r3 = DLinkedList::Referencia.new([{nombre: 'Mario', apellidos: 'Magallón'}], 'La democracia en América Latina', Date.new(1991, 7, 12))
+			before :each do				
+				@r2 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Mario',
+        					:apellidos => 'Magallón'
+        			tit		'Filosofía política de la educación'
+		        	fecha	'10/5/1993'
+				end
+				@r3 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Mario',
+        					:apellidos => 'Magallón'
+        			tit		'La democracia en América Latina'
+		        	fecha	'12/7/1991'
+				end				
 			end
 			
 			it "# Tipado" do
@@ -290,12 +333,48 @@ describe DLinkedList do
   			before :each do
   				@ls = DLinkedList::List.new()
   				
-  				@r2 = DLinkedList::Referencia.new([{nombre: 'Iván', apellidos: 'Sánchez'}], 'Ejemplos de ordenación', Date.new(1999, 4, 7))
-  				@r3 = DLinkedList::Referencia.new([{nombre: 'Alejandro', apellidos: 'López'}], 'Algoritmos de ordenación', Date.new(2011, 4, 7))
-  				@r4 = DLinkedList::Referencia.new([{nombre: 'Alejandro', apellidos: 'López'}, {nombre: 'Pedro', apellidos: 'Pérez'}, {nombre: 'Juan Carlos', apellidos: 'Rodríguez'}], 'Ordenación en Ruby', Date.new(2010, 2, 19))
-  				@r5 = DLinkedList::Referencia.new([{nombre: 'Alejandro', apellidos: 'López'}, {nombre: 'Pedro', apellidos: 'Pérez'}, {nombre: 'Juan Carlos', apellidos: 'Rodríguez'}], 'Ejemplos de ordenación, Parte 1', Date.new(2012, 3, 30))  				
-  				@r6 = DLinkedList::Referencia.new([{nombre: 'Alejandro', apellidos: 'López'}, {nombre: 'Pedro', apellidos: 'Pérez'}, {nombre: 'Juan Carlos', apellidos: 'Rodríguez'}], 'Ejemplos de ordenación, Parte 2', Date.new(2012, 3, 30))
-
+				@r2 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Iván',
+        					:apellidos => 'Sánchez'
+        			tit		'Ejemplos de ordenación'
+		        	fecha	'7/4/1999'
+				end
+  				@r3 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Alejandro',
+        					:apellidos => 'López'
+        			tit		'Algoritmos de ordenación'
+		        	fecha	'7/4/2011'
+				end
+  				@r4 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Alejandro',
+        					:apellidos => 'López'
+        			autor	:nombre => 'Pedro',
+        					:apellidos => 'Pérez'
+        			autor	:nombre => 'Juan Carlos',
+        					:apellidos => 'Rodríguez'
+        			tit		'Ordenación en Ruby'
+		        	fecha	'19/2/2010'
+				end
+				@r5 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Alejandro',
+        					:apellidos => 'López'
+        			autor	:nombre => 'Pedro',
+        					:apellidos => 'Pérez'
+        			autor	:nombre => 'Juan Carlos',
+        					:apellidos => 'Rodríguez'
+        			tit		'Ejemplos de ordenación, Parte 1'
+		        	fecha	'30/3/2012'
+				end
+				@r6 = DLinkedList::Referencia.new do
+					autor	:nombre => 'Alejandro',
+        					:apellidos => 'López'
+        			autor	:nombre => 'Pedro',
+        					:apellidos => 'Pérez'
+        			autor	:nombre => 'Juan Carlos',
+        					:apellidos => 'Rodríguez'
+        			tit		'Ejemplos de ordenación, Parte 2'
+		        	fecha	'30/3/2012'
+				end
   				
   				@ls.push_multi(@r2, @r3, @r4, @r5, @r6)
   			end  			
